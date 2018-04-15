@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    var data=[];
+    function ajaxGetData(url){
+        // 1、创建ajax对象
+        var xhr=new XMLHttpRequest();
+        //2、打开浏览器请求
+        xhr.open('get',url,true);
+        //3、发送请求
+        xhr.send();
+        // 4、保存this指针，方便后续赋值使用
+        var _this=this;
+        // 5、请求响应，并接受返回的数据
+        xhr.onreadystatechange=function(){
+            if(xhr.status===200 && xhr.readyState===4){
+                var myData=JSON.parse(xhr.responseText);
+                console.log(myData);
+                data=myData;
+                console.log(data)
+            }
+        }
+    }
+    
+    ajaxGetData('http://laarsun.320.io:47551');
+
+
+
+</script>
