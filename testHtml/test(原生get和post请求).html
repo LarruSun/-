@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    function ajaxGetData(url){
+        // 1、创建ajax对象
+        var xhr=new XMLHttpRequest();
+        //2、打开浏览器请求
+        xhr.open('get',url,true);
+        //3、发送请求
+        xhr.send();
+        // 4、保存this指针，方便后续赋值使用
+        var _this=this;
+        // 5、请求响应，并接受返回的数据
+        xhr.onreadystatechange=function(){
+            if(xhr.status===200 && xhr.readyState===4){
+                var ajajData=JSON.parse(xhr.responseText);
+                console.log(ajajData);
+            }
+        }
+    }
+
+
+    function ajaxPostData(url,obj,fn){
+        //请求参数的处理   吧对象转换成字符串
+        var str='';
+        for(key in obj){
+            str+=`${key}=${obj[key]}&`
+        }
+        str=str.substring(0,str.length-1);
+        console.log(str);
+        ////////////////////////////////////////////
+        
+
+
+        // 1、创建ajax对象
+        var xhr=new XMLHttpRequest();
+        //2、打开浏览器请求
+        xhr.open('post',url,true);
+        //声明发送的数据类型 设置后表示是post方式获取数据
+        xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+				
+        //3、发送请求
+        xhr.send(str);
+        // 4、保存this指针，方便后续赋值使用
+        var _this=this;
+        // 5、请求响应，并接受返回的数据
+        xhr.onreadystatechange=function(){
+            if(xhr.status===200 && xhr.readyState===4){       
+                var ajaxData=JSON.parse(xhr.responseText);
+                fn(true,ajaxData)
+            }else{
+                fn(false,'')
+            }
+        }
+    }
+    
+    // ajaxGetData('http://laarsun.320.io:47551');
+    var obj={
+        userId:'zhmsss',
+        loginCode:'19',
+        sex:'boy'
+    }
+    var url='http://localhost:3000/api/login'
+    ajaxPostData(url,obj,(type,res)=>{
+        // console.log(type)
+        if(type==true){
+            console.log(res);
+        }
+    })
+
+
+
+</script>

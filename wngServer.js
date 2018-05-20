@@ -25,6 +25,73 @@ app.get('/api/home/Top',function(req,res){
     })
 
 });
+//首页图片点进去后的API
+app.get('/api/home/enterImg',function(req,res){
+    var id=req.query.id;
+    var api=`http://www.weinihaigou.com/solr/searchGoods.shtml?themeId=${id}`;
+    request(api,function(error,response,body){
+        res.send(response.body)
+    })
+
+});
+
+//限时抢购图片点进去的API
+app.get('/api/home/timeBuy',function(req,res){
+    var api=`http://www.weinihaigou.com/goods/activityList.shtml?flag=1&page=1`;
+    request(api,function(error,response,body){
+        res.send(response.body)
+    })
+
+});
+//当季热卖图片点进去的API
+app.get('/api/home/hotBuy',function(req,res){
+    var page=req.query.page;
+    var api=`http://www.weinihaigou.com/solr/searchGoods.shtml?pageNum=${page}`;
+    request(api,function(error,response,body){
+        res.send(response.body)
+    })
+
+});
+
+//国家馆
+app.get('/api/home/counter',function(req,res){
+    var api=`http://www.weinihaigou.com/goods/queryCountryList.shtml`;
+    request(api,function(error,response,body){
+        res.send(response.body)
+    })
+
+});
+//品牌街
+app.get('/api/home/ppj',function(req,res){
+    var api=`http://www.weinihaigou.com/brand/queryBrandList.shtml`;
+    request(api,function(error,response,body){
+        res.send(response.body)
+    })
+
+});
+//新品
+app.get('/api/home/new',function(req,res){
+    var page=req.query.page;
+    var api=`http://www.weinihaigou.com/solr/searchGoods.shtml?pageNum=${page}&pageSize=20`;
+    request(api,function(error,response,body){
+        res.send(response.body)
+    })
+
+});
+//超值量贩
+app.get('/api/home/czlf',function(req,res){
+    var page=req.query.page;
+    var api=`http://www.weinihaigou.com/solr/searchGoods.shtml?pageNum=${page}&pageSize=20`;
+    request(api,function(error,response,body){
+        res.send(response.body)
+    })
+
+});
+
+
+
+
+
 // 精选好货
 app.get('/api/home/goodList',function(req,res){
     var api='http://www.weinihaigou.com/indexHotList.shtml';
@@ -54,6 +121,24 @@ app.get('/api/Fl/FlRight',function(req,res){
     })
 
 });
+
+
+// 商品详情
+app.get('/api/goodList',function(req,res){
+    var id=req.query.goodsNo;
+    // id='AKN0012';
+    var api=`http://www.weinihaigou.com/goods/getDetailMo.shtml?goodsNo=${id}`;
+    request(api,function(error,response,body){
+        res.send(response.body)
+    })
+
+});
+
+
+
+
+
+http://www.weinihaigou.com/solr/searchGoods.shtml?pageNum=1&pageSize=10
 
 
 
@@ -145,11 +230,18 @@ app.get('/api/login',function(req,res){
 
 var server = app.listen(3000,function(){
     console.log('监听端口号3000');
-    console.log('头部API:  http://localhost:3000/api/home/Top');
+    console.log('精选好货以上所有数据的API:  http://localhost:3000/api/home/Top');
+    console.log('首页图片点入后的API(需要传入id):  http://localhost:3000/api/home/enterImg');
+    console.log('首页限时抢购图片点入后的API:  http://localhost:3000/api/home/timeBuy');
+    console.log('首页当季热卖图片点入后的API(需要传入page):  http://localhost:3000/api/home/hotBuy');
+    console.log('首页国家馆点入后的API:  http://localhost:3000/api/home/counter');
+    console.log('首页品牌街点入后的API:  http://localhost:3000/api/home/ppj');
+    console.log('首页新品点入后的API(需要传入page):  http://localhost:3000/api/home/new');
+    console.log('首页超值量贩点入后的API(需要传入page):  http://localhost:3000/api/home/czlf');
     console.log('精选好货API:  http://localhost:3000/api/home/goodList');
-    console.log('分类左侧:  http://localhost:3000/api/Fl/FlLeft');
-    console.log('分类左侧:  http://localhost:3000/api/Fl/FlRight');
-
+    console.log('分类左侧API:  http://localhost:3000/api/Fl/FlLeft');
+    console.log('分类右侧API:  http://localhost:3000/api/Fl/FlRight');
+    console.log('商品详情API(需要传入goodsNo):  http://localhost:3000/api/goodList');
     console.log('发送验证码API:  http://localhost:3000/api/sendAuthCode');
     console.log('登陆验证API:  http://localhost:3000/api/login');
 });

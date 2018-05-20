@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./../res/jquery.js"></script>
+</head>
+<body>
+    
+</body>
+</html>
+
+
+<script>
+   function ajaxGet(){    
+        $.ajax({    
+            //请求方式    
+            type:"GET",    
+            //请求地址    
+            url:"http://localhost:3000/api/home/scrollAD",  
+            //返回数据格式为json,也可以是其他格式如    
+            dataType: "json",    
+            //请求成功后要执行的函数  
+            success: (res)=>{    
+                console.log(res);
+            }    
+        });    
+    }; 
+    function ajaxPost(){    
+        $.ajax({    
+            //请求方式    
+            type:"POST", 
+            data:{//要传给后台的数据
+                userId:123,
+                loginCode:'sad撒多所多所'
+            },   
+            //请求的地址    
+            url:" http://localhost:3000/api/login",  
+            //返回数据格式为json,也可以是其他格式如    
+            dataType: "json",    
+            //请求成功后要执行的函数 
+            success: (res)=>{  
+                console.log(res);
+            }    
+        });    
+    };
+
+    //调用
+    ajaxPost();
+    ajaxGet();
+
+
+</script>

@@ -1,6 +1,8 @@
 var express = require('express');
 var app = express();
 var request = require("request");
+var querystring = require('querystring')//post 请求
+
 var loginMess={
     user:0,
     authCodeData:`习近平主席夫人彭丽媛全国人大常委会副委员长吉炳轩国务委员兼外交部部长王毅全国政协副主席马飚何立峰等出席欢迎仪式`,
@@ -169,8 +171,46 @@ app.get('/api/login',function(req,res){
     }
 });
 
-
-
+app.post('/api/login',function(req,res){
+    // console.log('请求了数据');
+    var myDatas='';
+    //参数的接受
+    req.on('data', function (chunk) {
+        myDatas += chunk;  //一定要使用+=，如果myDatas=chunk，因为请求favicon.ico，body会等于{}
+    });
+    req.on('end', function () {
+        // 解析参数
+        // console.log(myDatas);
+        myDatas = querystring.parse(myDatas);  //将一个字符串反序列化为一个对象   不同参数之间用的是&隔开
+        // console.log(myDatas);  
+        
+        
+        // 登陆的判断
+        var userId=myDatas.userId;
+        var loginCode=myDatas.loginCode;
+        console.log(userId)
+        console.log(loginCode)
+        var returnObj={
+            'type':'sucess',
+            'data':{
+                'isLogin':'-1'
+            }
+        };
+        if(userId==loginMess.user){
+            // for(var i=0 ; i<loginCode.length ; i++){
+                if(loginCode!=loginMess.loginAuthCode.join('')){
+                    returnObj.data.isLogin='0';
+                    res.send(returnObj);
+                    return;
+                }
+            // }
+            returnObj.data.isLogin='1';
+            res.send(returnObj);
+        }else{
+            res.send(returnObj);
+        }    
+    })
+});
 
 
 
